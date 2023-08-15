@@ -10,13 +10,13 @@ public class Infogempa {
 
     @SerializedName("gempa")
     @Expose
-    private List<Gempa> gempa;
+    private List<Gempa__1> gempa;
 
-    public List<Gempa> getGempa() {
+    public List<Gempa__1> getGempa() {
         return gempa;
     }
 
-    public void setGempa(List<Gempa> gempa) {
+    public void setGempa(List<Gempa__1> gempa) {
         this.gempa = gempa;
     }
 

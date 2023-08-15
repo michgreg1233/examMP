@@ -2,6 +2,7 @@ package com.example.exam;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,20 +31,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         RecyclerView gempaRV = findViewById(R.id.idRVGempa);
-        Call<List<Gempa>> call = apiService.getGempaData();
-        call.enqueue(new Callback<List<Gempa>>() {
+        Call<Gempa> call = apiService.getGempaData();
+        call.enqueue(new Callback<Gempa>() {
             @Override
-            public void onResponse(Call<List<Gempa>> call, Response<List<Gempa>> response) {
+            public void onResponse(Call<Gempa> call, Response<Gempa> response) {
+                Log.d("RESPONSE LOG",call.request().url()+" - "+response.code()+"");
                 if (response.isSuccessful()) {
-                    List<Gempa> gempaDataList = response.body();
+                    Gempa gempaDataList = response.body();
                     GempaAdapter adapter = new GempaAdapter(gempaDataList);
                     gempaRV.setAdapter(adapter);
                 }
             }
 
             @Override
-            public void onFailure(Call<List<Gempa>> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"ERRORRRRRRRRRRRRRRRRRRRR",Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Gempa> call, Throwable t) {
+                Log.d("ERROR RESPONSE",t.getMessage());
+                Toast.makeText(MainActivity.this,t.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
 
